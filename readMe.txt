@@ -1,31 +1,33 @@
-This is the repository for CFAGO, a protein function prediction method based on cross-fusion of network structure and attributes via attention mechanism 
+This is the repository for PF2PI, a protein function prediction method based on AlphaFold2 and PPI
 
 
-annotation_preprocess.py is used to prepocess Gene Ontology annotation file in terms of STRING PPI network data. Run python annotation_preprocess.py -h for options and use instructions.
+annotation_preprocess2.py is used to prepocess Gene Ontology annotation file in terms of STRING PPI network data. 
 
-network_data_preprocess.py is used to prepocess STRING PPI network data to weighted adjacency matrix. Run python network_data_preprocess.py -h for options and use instructions.
+data_net.py is used to prepocess STRING PPI network data to weighted adjacency matrix.
 
+protein_struct_map.py is used to get protein contact map.
 
-attribute_data_preprocess.py is used to prepocess uniprot protein domain (pfam) and subcellular location data to binary vectors. Run python attribute_data_preprocess.py -h for options and use instructions.
+node2vec.py is used to get random walk path.
 
-self_supervised_leaning.py is used to pre-train CFAGO in terms of reconstruct protein features. Run python self_supervised_leaning.py -h for options and use instructions.
+screen.py is used to select the proteins present in both databases.
 
-CFAGO.py is used to fine-tune CFAGO and predict functions for testing proteins. Run python CFAGO.py -h for options and use instructions.
+get_embeddings_struct_features.py is used to get the final sturcture features.
 
+pre_trainer.py is used to pre-train CFAGO in terms of reconstruct protein features.
 
-Uses pytorch 1.12.0.
+fine-tuning.py is used to fine-tune CFAGO and predict functions for testing proteins.
+
+Uses pytorch 1.12.1
 
 ---------- Sample Use Case ----------
 
-Let's say you want to conduct experiments on Dataset/human.
+Let's say you want to conduct experiments on human dataset.
 
 Here is what you need to run:
 
-With a normal GPU node, in CFAGO directory:
-
 Step 1:
 
-Preprocess STRING PPI file, annotation file and uniprot file.
+Preprocess STRING PPI file, structure file.
 
 python data_annotation_2.py -data_path Dataset -af goa_human.gaf -pf 9606.protein.info.v11.5.txt -ppif 9606.protein.links.detailed.v11.5.txt -org human -stl 41
 
@@ -37,13 +39,11 @@ python node2vec.py
 
 python screen.py
 
-python get_embeddings.py
-
-python get_struct_features.py
+python get_embeddings_struct_features.py
 
 Step 2:
 
-Pre-train CFAGO by self-supervised learning:
+Pre-train by self-supervised learning:
 
 python pre_trainer.py --org human --dataset_dir Dataset/human --output human_result --dist-url tcp://127.0.0.1:3723 --seed 1329765522 --dim_feedforward 512 --nheads 8 --dropout 0.1 --attention_layers 6 --batch-size 32 --activation gelu --epochs 5000 --lr 1e-5
 
