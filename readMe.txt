@@ -1,5 +1,9 @@
 This is the repository for PF2PI, a protein function prediction method based on AlphaFold2 and PPI
 
+You can get the dataset at:
+String database https://cn.string-db.org/cgi/download?sessionId=bHWZ0VxhcZxe&species_text=Homo+sapiens for 9606.protein.links.v11.5.txt.gz and 9606.protein.links.detailed.v11.5.txt.gz
+Go database https://current.geneontology.org/products/pages/downloads.html for goa_human.gaf
+AlphaFold database https://alphafold.ebi.ac.uk/download for Homo sapoens
 
 annotation_preprocess2.py is used to prepocess Gene Ontology annotation file in terms of STRING PPI network data. 
 
